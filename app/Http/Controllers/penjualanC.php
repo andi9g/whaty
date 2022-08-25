@@ -126,13 +126,16 @@ class penjualanC extends Controller
             'mobil' => 'required',
             'tanggal' => 'required',
             'pembayaran' => 'required',
+            'hargamobilbeli' => 'required',
         ]);
         
         
         try{
-            $mobil = $request->mobil;
+            $mobil = explode("_",$request->mobil);
+            $mobil = $mobil[0];
             $tanggal = $request->tanggal;
             $pembayaran = $request->pembayaran;
+            $hargabeli = $request->hargamobilbeli;
             
             if($pembayaran == "kredit") {
                 $pembayaran = $pembayaran." ".$request->nilai." ".$request->lama;
@@ -144,6 +147,7 @@ class penjualanC extends Controller
             $store = new detailpembeliM;
             $store->nik = $nik;
             $store->idmobil = $mobil;
+            $store->hargabeli = $hargabeli;
             $store->tanggal = $tanggal;
             $store->ket = $pembayaran;
             $store->save();

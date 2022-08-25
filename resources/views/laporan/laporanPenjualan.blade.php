@@ -32,12 +32,11 @@
         <tr>
             <th width="10px">No</th>
             <th class="text-capitalize">Gambar</th>
-            <th class="text-capitalize">NIK</th>
-            <th class="text-capitalize">Nama Lengkap</th>
             <th class="text-capitalize">Plat Mobil</th>
             <th class="text-capitalize">Nama Mobil</th>
             <th class="text-capitalize">Warna</th>
             <th class="text-capitalize">Tahun Mobil</th>
+            <th class="text-capitalize">Harga Beli</th>
             <th class="text-capitalize">Ket</th>
             <th class="text-capitalize">Tanggal Beli</th>
         </tr>
@@ -47,11 +46,10 @@
                 <td>{{$loop->iteration}}</td>
                 <td style="text-align:center;padding: 5px 0px"><img src="{{url("images", $item->gambar)}}" class="rounded border" width="70px" alt=""></td>
                 <td nowrap><b>{{$item->nik}}</b></td>
-                <td style="text-transform: capitalize">{{$item->nama}}</td>
-                <td nowrap><b>{{$item->kodeplat}}</b></td>
                 <td >{{$item->namamobil}}</td>
                 <td nowrap>{{$item->warna}}</td>
                 <td style="text-align: center">{{$item->tahun}}</td>
+                <td>Rp{{number_format($item->hargabeli, 0, ",",".")}}</td>
                 <td nowrap>{{$item->ket}}</td>
                 <td style="text-align: center">{{date('d F Y',strtotime($item->tanggal))}}</td>
 

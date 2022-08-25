@@ -186,7 +186,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Modal title</h5>
+                                    <h5 class="modal-title">Proses Beli</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -198,15 +198,61 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="">Data Mobil Tersedia</label>
-                                        <select required id="select2{{$item->nik}}" class="form-control w-100" style="width:100%" name="mobil">
+                                        <select required id="select2{{$item->nik}}" onchange="pilihmobil{{$item->nik}}(this)" class="form-control w-100" style="width:100%" name="mobil">
                                             <option value="">Pilih Mobil</option>
                                             @foreach ($mobil as $m)
-                                                <option value="{{$m->idmobil}}">{{$m->namamobil." - ".$m->warna." - ".$m->tahun}}</option>
+                                                <option value="{{$m->idmobil."_".$m->hargamobil}}">{{$m->namamobil." - ".$m->warna." - ".$m->tahun}}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    .<div class='form-group'>
+                                    <div class='form-group'>
+                                        <label for='forhargamobil{{$item->nik}}' required class='text-capitalize'>harga mobil</label>
+                                        <input type='text' name='hargamobil' readonly id='forhargamobil{{$item->nik}}' class='form-control'>
+                                    </div>
+
+                                    <div class='form-group'>
+                                        <label for='forhargamobilbeli{{$item->nik}}' required class='text-capitalize'>harga yang dibeli</label>
+                                        <input type='number' name='hargamobilbeli' onkeyup="ketikharga{{$item->nik}}(this)" onchange="ketikharga{{$item->nik}}(this)" onClick="ketikharga{{$item->nik}}(this)" id='forhargamobilbeli{{$item->nik}}' class='form-control'>
+                                        <p for="" id="keteranganharga{{$item->nik}}"></p>
+                                    </div>
+
+                                    <script>
+                                        function pilihmobil{{$item->nik}}(value) {
+                                            let val = value.value.split("_")[1];
+                                            
+                                            if(val != "") {
+                                                document.getElementById('forhargamobil{{$item->nik}}').value=formatRupiah{{$item->nik}}(val, "Rp");
+                                                document.getElementById('forhargamobilbeli{{$item->nik}}').value=val;
+                                            }else {
+                                                ocument.getElementById('forhargamobil{{$item->nik}}').value=""
+                                            }
+                                        }
+
+                                        function ketikharga{{$item->nik}}(nilai) {
+                                            var harga = nilai.value;
+                                            document.getElementById('keteranganharga{{$item->nik}}').innerHTML = formatRupiah{{$item->nik}}(harga, "Rp")
+                                        }
+
+                                        function formatRupiah{{$item->nik}}(angka, prefix){
+                                            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                                            split   		= number_string.split(','),
+                                            sisa     		= split[0].length % 3,
+                                            rupiah     		= split[0].substr(0, sisa),
+                                            ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+                                            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                                            if(ribuan){
+                                                separator = sisa ? '.' : '';
+                                                rupiah += separator + ribuan.join('.');
+                                            }
+
+                                            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                                            return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+                                        }
+                                    </script>
+
+                                    <div class='form-group'>
                                         <label for='fortanggal' class='text-capitalize'>tanggal beli</label>
                                         <input type='date' name='tanggal' id='fortanggal' class='form-control' placeholder='masukan tanggal'>
                                     </div>

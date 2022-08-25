@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class authC extends Controller
 {
 
+    public function root()
+    {
+        return redirect('login');
+    }
+
     public function logout(Request $request)
     {
         $request->session()->flush();

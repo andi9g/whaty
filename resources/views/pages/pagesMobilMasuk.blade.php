@@ -25,6 +25,18 @@
         </div>
     </div>
     
+
+    @php
+        $perangkat = is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), "mobile"));
+                    
+        if($perangkat) {
+            $halaman = "api";
+            $target = "";
+        }else {
+            $halaman = "web";
+            $target = "_blank";
+        }
+    @endphp
     <div class="card">
         <div class="card-body table-responsive">
             
@@ -114,9 +126,17 @@
                                             
                                             
                                         </div>
+
+                                        @php
+                                            $kata = (String) ($item->hp);
+                                            $nohp = substr($kata, 0,2);
+                                            if($nohp == "08") {
+                                                $nohp = "62".substr($kata,1,13);
+                                            }
+                                        @endphp
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <a href="" class="btn btn-success text-bold">
+                                            <a href="https://{{$halaman}}.whatsapp.com/send?phone={{ $nohp }}&text=*Hallo {{$item->nama}}*,%0ASaya Tertarik dengan Mobil :%0A*{{ strtoupper($item->namamobil).'* %0ADengan Plat : %0A*'.strtoupper($item->kodeplat) }}*, %0A%0A Apakah Masih Tersedia?" class="btn btn-success text-bold" target="{{$target}}">
                                                  Chat Via WhatsApp
                                             </a>
                                         </div>

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'authC@root');
+
 Route::get('login', 'authC@login');
 Route::post('login', 'authC@proseslogin')->name('proses.login');
 Route::get('logout', 'authC@logout');

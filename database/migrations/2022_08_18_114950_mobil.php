@@ -90,6 +90,7 @@ class Mobil extends Migration
             $table->Integer('idmobil')->unique();
             $table->date('tanggal');
             $table->String('ket');
+            $table->bigInteger('hargabeli')->default(0);
             $table->Integer('iddurasi')->nullable();
             $table->timestamps();
         });
