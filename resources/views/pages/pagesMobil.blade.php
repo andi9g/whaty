@@ -46,6 +46,17 @@
                                     <option value='matic'>Matic</option>
                                 <select>
                             </div>
+
+                            <div class='form-group text-capitalize'>
+                                <label for="">Masukan Merek Mobil</label>
+                                <select name="merekmobil" style="width: 100%; height: 100px;" required class="form-control text-capitalize" id="merekmobil">
+                                    <option value="">Masukan Merek</option>
+                                    @foreach ($merek as $m)
+                                        <option>{{$m->merek}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class='form-group'>
                                 <label for='forkodeplat'>Kode Plat BM</label>
                                 <input type='text' name='kodeplat' id='forkodeplat' class='form-control form-control-sm' placeholder='masukan kode plat'>
@@ -59,7 +70,7 @@
                                 <select name="warna" style="width: 100%; height: 100px;" required class="form-control text-capitalize" id="warnamobil">
                                     <option value="">Masukan Warna</option>
                                     @foreach ($warna as $w)
-                                        <option>{{$w->warna}}</option>
+                                        <option>{{$w->merekmobil}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -101,6 +112,7 @@
                     <th class="text-capitalize">Gambar</th>
                     <th class="text-capitalize">kode plat</th>
                     <th class="text-capitalize">nama mobil</th>
+                    <th class="text-capitalize">merek mobil</th>
                     <th class="text-capitalize">harga mobil</th>
                     <th class="text-capitalize">tahun</th>
                     <th class="text-capitalize">warna</th>
@@ -114,6 +126,7 @@
                         <td class="text-center"><img src="{{url("images", $item->gambar)}}" class="rounded border" width="70px" alt=""></td>
                         <td><b>{{$item->kodeplat}}</b></td>
                         <td>{{$item->namamobil}}</td>
+                        <td>{{$item->merekmobil}}</td>
                         <td>Rp{{number_format($item->hargamobil, 0,",",".")}}</td>
                         <td>{{$item->tahun}}</td>
                         <td>{{$item->warna}}</td>
@@ -170,6 +183,25 @@
                                                         @endif>Matic</option>
                                                     <select>
                                                 </div>
+
+                                                <div class='form-group text-capitalize'>
+                                                    <label for="">Masukan Merek Mobil</label>
+                                                    <select name="merekmobil" style="width: 100%; height: 100px;" required class="form-control text-capitalize" id="merekmobil{{$item->idmobil}}">
+                                                        <option value="">Masukan Merek</option>
+                                                        @foreach ($merek as $m)
+                                                            <option @if ($item->merekmobil == $m->merekmobil)
+                                                                selected
+                                                            @endif>{{$m->merekmobil}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <script>
+                                                    $("#merekmobil{{$item->idmobil}}").select2({
+                                                        tags: true,
+                                                    });
+                                                </script>
+
                                                 <div class='form-group'>
                                                     <label for='forkodeplat'>Kode Plat BM</label>
                                                     <input type='text' name='kodeplat' id='forkodeplat' class='form-control form-control-sm' value="{{$item->kodeplat}}" placeholder='masukan kode plat'>
@@ -239,6 +271,9 @@
 
         $(document).ready(function() {
             $("#warnamobil").select2({
+                tags: true
+            });
+            $("#merekmobil").select2({
                 tags: true
             });
         });

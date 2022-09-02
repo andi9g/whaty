@@ -35,11 +35,13 @@ class mobilC extends Controller
         $keterangan = keteranganM::get();
 
         $warna = mobilM::groupBy('warna')->select('warna')->get();
+        $merekmobil = mobilM::groupBy('merekmobil')->select('merekmobil')->get();
 
         return view('pages.pagesMobil', [
             'mobil' => $tampil,
             'keterangan' => $keterangan,
             'warna' => $warna,
+            'merek' => $merekmobil,
         ]);
 
     }
@@ -69,7 +71,8 @@ class mobilC extends Controller
             'tahun' => 'required|numeric',
             'kodeplat' => 'required|unique:mobil,kodeplat',
             'warna' => 'required',
-            'gambar' => 'required',
+            'merekmobil' => 'required',
+            // 'gambar' => 'required',
         ]);
         
         try{
@@ -95,6 +98,7 @@ class mobilC extends Controller
             $hargamobil = $request->hargamobil;
             $typemobil = $request->typemobil;
             $tahun = $request->tahun;
+            $merekmobil = $request->merekmobil;
             $kodeplat = $request->kodeplat;
             $warna = $request->warna;
             $gambar = $fileName;
@@ -106,6 +110,7 @@ class mobilC extends Controller
             $store->hargamobil = $hargamobil;
             $store->typemobil = $typemobil;
             $store->tahun = $tahun;
+            $store->merekmobil = $merekmobil;
             $store->kodeplat = $kodeplat;
             $store->warna = $warna;
             $store->gambar = $gambar;
@@ -161,7 +166,8 @@ class mobilC extends Controller
             'tahun' => 'required|numeric',
             'kodeplat' => 'required',
             'warna' => 'required',
-            'gambar' => 'required',
+            'merekmobil' => 'required',
+            // 'gambar' => 'required',
         ]);
         
         
@@ -194,6 +200,7 @@ class mobilC extends Controller
             $tahun = $request->tahun;
             $kodeplat = $request->kodeplat;
             $warna = $request->warna;
+            $merekmobil = $request->merekmobil;
             $gambar = $gambar;
             $idpenjual = 0;
             $idketerangan = 1;
@@ -206,6 +213,7 @@ class mobilC extends Controller
                 'kodeplat' => $kodeplat,
                 'warna' => $warna,
                 'gambar' => $gambar,
+                'merekmobil' => $merekmobil,
                 'idsupplier' => $idpenjual,
                 'idketerangan' => $idketerangan,
             ]);
